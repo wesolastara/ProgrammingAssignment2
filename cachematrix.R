@@ -1,44 +1,34 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Programming Assignment 2 wrote by Maciej Gielnik for the Coursera
+## R programming course
 
-## Write a short comment describing this function
+## This function prepares values for the cacheSolve function
 
 makeCacheMatrix <- function(x = matrix()) {
   m <- NULL
-  setmatrix <- function(y) {
+  setmatrix <- function(y) {   ## setting matrix
     x <<- y
     m <<- NULL
   }
-  getmatrix <- function() x
-  setsolve <- function(solve) m <<- solve
-  getsolve <- function() m
-  list(setmatrix = setmatrix, getmatrix = getmatrix,
+  getmatrix <- function() x    ## getting matrix 
+  setsolve <- function(solve) m <<- solve   ## setting inversion of a matrix 
+  getsolve <- function() m                  ## getting inversion of a matrix
+  list(setmatrix = setmatrix, getmatrix = getmatrix, ## making a list with values
        setsolve = setsolve,
        getsolve = getsolve)
 }
 
-## Write a short comment describing this function
+## This function calculates the inversion of a matrix ans cache result
 
 cacheSolve <- function(x, ...) {
-  m <- x$getsolve()
-  if(!is.null(m)) {
-    message("getting cached data")
+  m <- x$getsolve()    ## loads m from makeCacheMatrix
+  if(!is.null(m)) {                    ## checks if the inversion was calculated 
+    message("getting cached data")     ## if it was returns cached data from memory
     return(m)
   }
-  data <- x$getmatrix()
-  m <- solve(data, ...)
-  x$setsolve(m)
-  m
+  data <- x$getmatrix()                ## gets data for calculation
+  m <- solve(data, ...)                ## calculates the inversion of a matrix
+  x$setsolve(m)                        ## fills a list with a calculated inversion of a matrix
+  m                                    ## result
 }
-
-## Testing
-
-m1 <- matrix(c(1/2, -1/4, -1, 3/4), nrow = 2, ncol = 2)
-m1
-
-my_matrix_boject <- makeCacheMatrix(m1)
-
-cacheSolve(my_matrix_boject)
-
 
 
